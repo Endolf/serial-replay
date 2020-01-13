@@ -1,0 +1,8 @@
+*_secrets.h
+.pio/
+.pioenvs/
+.piolibdeps/
+.idea/
+/*.iml
+.vscode/
+/*.code-workspace
