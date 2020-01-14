@@ -34,7 +34,6 @@ void setup() {
         }
         file = sd.open("logs/log.txt", FILE_WRITE);
 
-        file.flush();
         lastFileSyncTime = millis();
     }
 
@@ -50,26 +49,30 @@ void loop() {
     while (Serial1.available()) {
         String data = Serial1.readStringUntil('\n');
         Serial2.println(data);
+        data.trim();
         Serial.print(millis());
         Serial.print(" S1 ");
         Serial.println(data);
         if(file.isOpen()) {
             file.print(millis());
             file.print(" S1 ");
-            file.println(data);
+            file.print(data);
+            file.print("\n");
         }
     }
 
     while (Serial2.available()) {
         String data = Serial2.readStringUntil('\n');
         Serial1.println(data);
+        data.trim();
         Serial.print(millis());
         Serial.print(" S2 ");
         Serial.println(data);
         if(file.isOpen()) {
             file.print(millis());
             file.print(" S2 ");
-            file.println(data);
+            file.print(data);
+            file.print("\n");
         }
     }
 }
