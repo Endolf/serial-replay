@@ -7,6 +7,7 @@ char logBuffer[256];
 SdFat sd;
 File file;
 unsigned long playbackTime;
+unsigned long offset;
 String nextDataItem;
 bool doneOut = false;
 bool doneReturn = false;
@@ -19,6 +20,7 @@ void processLine() {
             file.close();
             file = sd.open("data/return.log", FILE_READ);
             Serial.println("Finished out leg, running return leg");
+            offset+=millis();
         } else {
             doneReturn = true;
             file.close();
@@ -55,7 +57,7 @@ void setup() {
 }
 
 void loop() {
-    if(!doneReturn && (millis() > playbackTime)) {
+    if(!doneReturn && (millis() > (playbackTime+offset))) {
         Serial.print("Sending to port (");
         Serial.print(port);
         Serial.print(") ");
